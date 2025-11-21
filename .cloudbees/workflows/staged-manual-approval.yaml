@@ -26,15 +26,17 @@ jobs:
     needs: qa-approval
     uses: test-cdro-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{
+        fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id
+        }}
       environment: PROD
-      
   QA:
     uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
+      artifact-id: ${{
+        fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id
+        }}
       environment: QA
-      
   qa-approval:
     needs: QA
     timeout-minutes: 4320
@@ -42,7 +44,7 @@ jobs:
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: ff67605a-b3ca-11ef-9745-42010a83ae7d
+      approvers: 7b838786-7c3e-11f0-ae4f-42010a83ae57
   prod-approval:
     needs:
       - PROD
@@ -51,4 +53,4 @@ jobs:
     with:
       disallowLaunchByUser: false
       notifyAllEligibleUsers: false
-      approvers: ff67605a-b3ca-11ef-9745-42010a83ae7d
+      approvers: 7b838786-7c3e-11f0-ae4f-42010a83ae57
