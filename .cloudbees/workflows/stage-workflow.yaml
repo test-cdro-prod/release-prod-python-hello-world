@@ -21,14 +21,14 @@ metadata:
         - PROD
 jobs:
   PROD:
-    uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
+    uses: test-cdro-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: PROD
     needs: QA
     
   QA:
-    uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
+    uses: test-cdro-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: QA
