@@ -1,19 +1,28 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: My workflow
-
+name: With userinput
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
     inputs:
       manifest:
         type: string
         required: true
-      
-
+      environment:
+        type: choice
+        options:
+          - QA
+          - PROD
+          - DEV
+        default: PROD
+        required: true
+        description: Choose the Environment
+      user:
+        type: string
+        description: enter the user details
 jobs:
   app1:
     if: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
     uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
-      environment: PROD
+      environment: ${{ inputs.environment }}

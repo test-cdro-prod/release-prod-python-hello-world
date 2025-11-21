@@ -12,7 +12,7 @@ on:
 
 jobs:
   app1:
-    if: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].deploy }}
+    if: ${{ fromJSON(inputs.manifest)['prod-python-hello-world'].deploy }}
     uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
       artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
