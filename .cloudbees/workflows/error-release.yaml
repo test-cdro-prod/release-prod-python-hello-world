@@ -4,6 +4,10 @@ name: My workflow
 
 on:
   workflow_dispatch: 
+    inputs:
+      manifest:
+        type: string
+        required: true
     
 
 jobs:
