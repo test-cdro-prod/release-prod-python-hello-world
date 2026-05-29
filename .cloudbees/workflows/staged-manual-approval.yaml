@@ -7,10 +7,7 @@ on:
       manifest:
         type: string
         required: true
-        description: This is a system-generated parameter and is required for use in
-          application releases. Refer to
-          https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest
-          for the expected format
+        description: This is a system-generated parameter and is required for use in application releases. Refer to https://docs.cloudbees.com/docs/cloudbees-platform/latest/applications/releases#manifest for the expected format
 metadata:
   stages/v1alpha1:
     - name: QA
@@ -26,20 +23,16 @@ jobs:
     needs: qa-approval
     uses: test-cdro-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{
-        fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id
-        }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: PROD
   QA:
     uses: cbp-test-prod/prod-python-hello-world/.cloudbees/workflows/deploy.yaml
     with:
-      artifact-id: ${{
-        fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id
-        }}
+      artifact-id: ${{ fromJSON(inputs.manifest)['prod-python-hello-world']['cbpautomation/python-hello-world-docker'].id }}
       environment: QA
   qa-approval:
     needs: QA
-    timeout-minutes: 4320
+    timeout-minutes: 3
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
       disallowLaunchByUser: false
@@ -48,7 +41,7 @@ jobs:
   prod-approval:
     needs:
       - PROD
-    timeout-minutes: 4320
+    timeout-minutes: 3
     delegates: cloudbees-io/manual-approval/custom-job.yml@v1
     with:
       disallowLaunchByUser: false
