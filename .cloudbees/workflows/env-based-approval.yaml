@@ -18,6 +18,7 @@ metadata:
         - Deploy-PROD
 jobs:
   Deploy-PROD:
+    timeout-minutes: 2
     environment: approval_PROD
     steps:
       - run: echo "Deploying to ${{ job.environment }}"
